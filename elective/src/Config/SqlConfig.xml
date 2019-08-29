@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+ 
+ <configuration>
+ 
+    <!--logImpl：打印SQL语句  -->
+ 
+   <settings>
+      <setting name="logImpl" value="LOG4J"/>
+   </settings>
+   
+   <!-- 在 spring.xml文件中配置连接数据库 -->
+   <!-- 在 spring.xml文件中配置mapper映射 -->
+ </configuration>

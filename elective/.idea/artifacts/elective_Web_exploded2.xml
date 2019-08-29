@@ -1,0 +1,46 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="elective:Web exploded2">
+    <output-path>$PROJECT_DIR$/out/artifacts/elective_Web_exploded2</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="elective/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="elective" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="lib" />
+          <element id="file-copy" path="E:/SSM jar/spring-core-4.0.0.RELEASE.jar" />
+          <element id="file-copy" path="E:/SSM jar/log4j-core-2.0-rc1.jar" />
+          <element id="file-copy" path="E:/SSM jar/mybatis-3.2.7.jar" />
+          <element id="file-copy" path="E:/SSM jar/asm-3.3.1.jar" />
+          <element id="file-copy" path="E:/SSM jar/spring-expression-4.0.0.RELEASE.jar" />
+          <element id="file-copy" path="E:/SSM jar/junit-4.9.jar" />
+          <element id="file-copy" path="E:/SSM jar/slf4j-log4j12-1.7.5.jar" />
+          <element id="file-copy" path="E:/SSM jar/servlet-api-2.4.jar" />
+          <element id="file-copy" path="E:/SSM jar/spring-tx-3.1.1.RELEASE.jar" />
+          <element id="file-copy" path="E:/SSM jar/mybatis-spring-1.2.2.jar" />
+          <element id="file-copy" path="E:/SSM jar/mysql-connector-java-8.0.11.jar" />
+          <element id="file-copy" path="E:/SSM jar/spring-aop-4.0.0.RELEASE.jar" />
+          <element id="file-copy" path="E:/SSM jar/spring-web-4.0.0.RELEASE.jar" />
+          <element id="file-copy" path="E:/SSM jar/spring-jdbc-4.0.0.RELEASE.jar" />
+          <element id="file-copy" path="E:/SSM jar/cglib-2.2.2.jar" />
+          <element id="file-copy" path="E:/SSM jar/commons-dbcp-1.2.2.jar" />
+          <element id="file-copy" path="E:/SSM jar/jstl-1.2.jar" />
+          <element id="file-copy" path="E:/SSM jar/spring-webmvc-4.0.0.RELEASE.jar" />
+          <element id="file-copy" path="E:/SSM jar/log4j-1.2.17.jar" />
+          <element id="file-copy" path="E:/SSM jar/standard.jar" />
+          <element id="file-copy" path="E:/SSM jar/spring-context-4.0.0.RELEASE.jar" />
+          <element id="file-copy" path="E:/SSM jar/commons-pool-1.3.jar" />
+          <element id="file-copy" path="E:/SSM jar/slf4j-api-1.7.5.jar" />
+          <element id="file-copy" path="E:/SSM jar/c3p0-0.9.1.2.jar" />
+          <element id="file-copy" path="E:/SSM jar/log4j-api-2.0-rc1.jar" />
+          <element id="file-copy" path="E:/SSM jar/javassist-3.17.1-GA.jar" />
+          <element id="file-copy" path="E:/SSM jar/spring-beans-4.0.0.RELEASE.jar" />
+          <element id="file-copy" path="E:/SSM jar/aopalliance-1.0.jar" />
+          <element id="file-copy" path="E:/SSM jar/commons-logging-1.1.1.jar" />
+          <element id="file-copy" path="E:/SSM jar/standard-1.1.2.jar" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

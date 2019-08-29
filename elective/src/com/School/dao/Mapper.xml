@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper  namespace="com.School.dao.Mapper">
+<resultMap id="getall" type="com.School.vo.KeCheng" >
+   <id property="cid" column="cid"/>
+   <result property="tid" column="tid"/>
+   <result property="cname" column="cname"/>
+   <result property="ctype" column="ctype"/>
+   <result property="ccredit" column="ccredit"/>
+   <result property="cmax" column="cmax"/>
+   <result property="cnote" column="cnote"/>
+   <result property="cprecid" column="cprecid"/>
+   <association property="elect" javaType="com.School.vo.Elect">
+   <result property="sid" column="sid"/>
+   <result property="kid" column="kid"/>
+   <result property="score" column="score"/> 
+   </association>
+   <association property="teacher" javaType="com.School.vo.Teachar">
+     <id property="tid" column="tid"></id>
+     <result property="tkey" column="tkey"/>
+     <result property="tname" column="tname"/>
+     <result property="tsex" column="tsex	"/>
+     <result property="tage" column="tage"/>
+     <result property="tphone" column="tphone"/>
+     <result property="tmail" column="tmail"/>
+     <collection property="stu" ofType="com.School.vo.StuXinxi">
+     <id property="sid" column="sid" />
+				<result property="skey" column="skey" />
+				<result property="sname" column="sname" />
+				<result property="ssex" column="ssex" />
+				<result property="sage" column="sage" />
+				<result property="scredit" column="scredit" />
+				<result property="saddress" column="saddress" />
+				<result property="sphone" column="sphone" />
+				<result property="semail" column="semail" />	
+     </collection>
+   </association>
+</resultMap>
+<resultMap id="getTea" type="com.School.vo.TeacherG" >
+   <id property="cid" column="cid"/>
+   <result property="tid" column="tid"/>
+   <result property="cname" column="cname"/>
+   <result property="ctype" column="ctype"/>
+   <result property="ccredit" column="ccredit"/>
+   <result property="cmax" column="cmax"/>
+   <result property="cnote" column="cnote"/>
+   <result property="cprecid" column="cprecid"/>
+   <collection property="stu" ofType="com.School.vo.Stu">
+                <id property="sid" column="sid" />
+				<result property="skey" column="skey" />
+				<result property="sname" column="sname" />
+				<result property="ssex" column="ssex" />
+				<result property="sage" column="sage" />
+				<result property="scredit" column="scredit" />
+				<result property="saddress" column="saddress" />
+				<result property="sphone" column="sphone" />
+				<result property="semail" column="semail" />
+				<association property="elect" javaType="com.School.vo.Elect">
+                  <result property="sid" column="sid"/>
+                  <result property="cid" column="cid"/>
+                  <result property="score" column="score"/> 
+               </association>	
+               </collection>
+</resultMap>
+
+    <!-- <select id="insert"  resultType="java.lang.Integer"   parameterType="String">
+
+           INSERT INTO ${Zhiye}(username,PASSWORD) VALUES(#{username},#{password});
+
+    </select> -->
+    <select id="loginS" resultType="com.School.vo.StuXinxi" parameterType="String">
+            SELECT sid,skey,sname,ssex,sage,scredit,saddress ,sphone,semail FROM student WHERE sid=#{username} AND skey=#{password}
+    </select>
+    <update id="UpdateS" parameterType="String">
+           update student set  skey=#{password} WHERE sid=#{username} and skey=#{password1}
+    </update>
+    <select id="getmust" parameterType="String" resultMap="getall">
+      SELECT * FROM teacher t
+		INNER JOIN course c
+		ON t.tid=c.tid
+		INNER JOIN student s
+		ON sid=#{sid}
+		and ctype="必修课"
+		</select>
+		<select id="getxuanxiu" resultMap="getall">
+		SELECT*FROM teacher t
+		INNER JOIN course c
+		ON ctype="选修课"
+		AND t.tid=c.tid
+		</select>
+		<insert id="setXuanxiu" parameterType="String">
+		INSERT INTO elect(sid,cid,score) VALUES(#{sid},#{cid},0)
+		</insert>
+		<select id="getElect" parameterType="String" resultType="com.School.vo.Elect" >
+		SELECT *FROM elect WHERE sid=#{sid} AND cid=#{cid}
+		</select>
+        <select id="getAllK" parameterType="String" resultMap="getall">
+        SELECT * FROM elect e
+         INNER JOIN course c
+         ON e.cid=c.cid
+         INNER JOIN teacher t
+         ON c.tid=t.tid
+         WHERE e.sid=#{sid}
+        </select>
+     <delete id="delete" parameterType="String">
+     DELETE FROM elect WHERE sid=#{sid} AND cid=#{cid}
+     </delete>
+     <select id="logint" resultType="com.School.vo.Teachar">
+     select *from teacher WHERE tid=#{username} AND tkey=#{password}
+     </select>
+     <update id="UpdateTea" parameterType="String" >
+           update teacher set  tkey=#{password} WHERE tid=#{username} and tkey=#{password1}
+    </update>
+    <select id="seleteTea" resultMap="getTea"  parameterType="java.lang.String">
+  SELECT *FROM course c
+INNER JOIN elect e
+ON e.cid=c.cid
+INNER JOIN student s
+ON s.sid=e.sid
+WHERE c.tid =#{tid}
+AND ctype='必修课'
+    </select>
+    <select id="seleteall" resultMap="getTea" parameterType="String">
+     SELECT *FROM course c
+INNER JOIN elect e
+ON e.cid=c.cid
+INNER JOIN student s
+ON s.sid=e.sid
+WHERE c.tid =#{tid}
+    </select>
+    <update id="DaFen" parameterType="String">
+    UPDATE ELECT SET SCORE=#{score} WHERE SID=#{sid} AND CID=#{cid}
+    </update>
+    <select id="loginm" parameterType="String" resultType="com.School.vo.Manager">
+    select *from manager where mid=#{username} AND mpass=#{password}
+    </select>
+    <select id="seleteXuanXiu" parameterType="String" resultMap="getTea">
+     SELECT *FROM course c
+INNER JOIN elect e
+ON e.cid=c.cid
+INNER JOIN student s
+ON s.sid=e.sid
+WHERE c.tid =#{tid}
+AND ctype='选修课'
+    </select>
+    <select id="seletpage" parameterType="Integer" resultType="com.School.vo.Stu">
+     SELECT *FROM student LIMIT #{pagenum},#{pagesize}
+    </select>
+    <select id="seletStuAll" resultType="com.School.vo.Stu">
+    select *from student
+    </select>
+    <select id="mohucx" resultType="com.School.vo.Stu" parameterType="String">
+SELECT *FROM  student WHERE sid LIKE CONCAT('%',#{mohu},'%') 
+    OR sname LIKE CONCAT('%',#{mohu},'%')
+    OR ssex LIKE CONCAT('%',#{mohu},'%')
+    OR sage LIKE CONCAT('%',#{mohu},'%') 
+    OR saddress LIKE CONCAT('%',#{mohu},'%') 
+    OR sphone LIKE CONCAT('%',#{mohu},'%') 
+    OR semail LIKE CONCAT('%',#{mohu},'%') 
+    </select>
+    <delete id="deleStu" parameterType="String">
+    DELETE FROM student WHERE sid=#{sid}
+    </delete>
+    <update id="updateStu" parameterType="com.School.vo.Stu">
+    UPDATE student SET sid=#{sid} ,skey=#{skey} ,sname=#{sname} ,ssex=#{ssex} ,
+sage=#{sage} ,scredit=#{scredit} ,saddress=#{saddress}, sphone=#{sphone}, 
+semail=#{semail}
+WHERE SID=#{sid}
+    
+    </update>
+    <insert id="insertStu" parameterType="com.School.vo.Stu">
+    INSERT INTO student(sid,skey,sname,ssex,sage,scredit,saddress,sphone,semail) 
+       
+    
+    VALUES(#{sid},#{skey},#{sname},#{ssex},#{sage},#{scredit},#{saddress},#{sphone},#{semail})
+    
+    </insert>
+    <select id="getTeacher" resultType="com.School.vo.Teachar">
+    SELECT *FROM teacher  
+    </select>
+    <select id="getTeacherpage" resultType="com.School.vo.Teachar" parameterType="Integer">
+    SELECT *FROM teacher LIMIT #{pagenum},#{pagesize}
+    </select>
+    <select id="teachermohuchaxun" resultType="com.School.vo.Teachar" parameterType="String">
+SELECT *FROM  teacher WHERE tid LIKE CONCAT('%',#{mohu},'%') 
+    OR tname LIKE CONCAT('%',#{mohu},'%')
+    OR tsex LIKE CONCAT('%',#{mohu},'%')
+    OR tage LIKE CONCAT('%',#{mohu},'%')  
+    OR tphone LIKE CONCAT('%',#{mohu},'%') 
+    OR tmail LIKE CONCAT('%',#{mohu},'%') 
+    </select>
+    <delete id="deleTea" parameterType="String">
+    DELETE FROM teacher WHERE tid=#{tid}
+    
+    </delete>
+    <update id="updateTeacher" parameterType="com.School.vo.Teachar">
+    UPDATE teacher SET tid=#{tid} ,tkey=#{tkey} ,tname=#{tname} ,tsex=#{tsex},
+tage=#{tage} , tphone=#{tphone}, 
+tmail=#{tmail}
+WHERE TID=#{tid}
+    </update>
+    <insert id="insertTeacher" parameterType="com.School.vo.Teachar">
+  INSERT INTO teacher(tid,tkey,tname,tsex,tage,tphone,tmail) VALUES(#{tid},#{tkey},#{tname},#{tsex},#{tage},#{tphone},#{tmail})
+    </insert>
+    <select id="selectkecheng" resultMap="getall" parameterType="Integer">
+    
+    SELECT *FROM course c
+    INNER JOIN teacher t
+    ON t.tid=c.tid
+    LIMIT #{pagenum},#{pagesize}
+    </select>
+    <select id="slectKeAll" resultMap="getall">
+    select *from course c
+    INNER JOIN teacher t
+    ON t.tid=c.tid
+    </select>
+    <delete id="deleCourse" parameterType="String">
+    DELETE FROM course WHERE cid=#{cid}
+    </delete>
+    <update id="updateCourse" parameterType="com.School.vo.KeCheng">
+    UPDATE  course SET cid=#{cid},cname=#{cname},ctype=#{ctype},ccredit=#{ccredit},cmax=#{cmax},cnote=#{cnote},cprecid=#{cprecid} WHERE cid=#{cid}
+    </update>
+    <select id="mohuchaxunCourse" parameterType="String" resultMap="getall">
+    SELECT *FROM  course c
+    INNER JOIN teacher t
+    ON c.tid=t.tid
+    WHERE cid LIKE CONCAT('%',#{mohu},'%') OR cname LIKE CONCAT('%',#{mohu},'%')
+    OR ctype LIKE CONCAT('%',#{mohu},'%')
+    OR ccredit LIKE CONCAT('%',#{mohu},'%') 
+    OR cmax LIKE CONCAT('%',#{mohu},'%') 
+    OR cnote LIKE CONCAT('%',#{mohu},'%') 
+    OR cprecid LIKE CONCAT('%',#{mohu},'%') 
+    </select>
+    <insert id="Courseinsert" parameterType="com.School.vo.KeCheng">
+        INSERT INTO course(cid,tid,cname,ctype,ccredit,cmax,cnote,cprecid) VALUES(#{cid},#{tid},#{cname},#{ctype},#{ccredit},#{cmax},#{cnote},#{cprecid})
+    </insert>
+</mapper>
